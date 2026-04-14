@@ -1,0 +1,5 @@
+{
+  "name": "UC Recurrence Risk Warning System",
+  "description": "A comprehensive TCM-driven recurrence risk warning system for Ulcerative Colitis (UC), featuring AI symptom extraction, ML risk scoring, and follow-up management.",
+  "requestFramePermissions": []
+}

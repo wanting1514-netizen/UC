@@ -1,0 +1,64 @@
+{
+  "entities": {
+    "Patient": {
+      "title": "Patient",
+      "description": "Patient basic information",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "age": { "type": "number" },
+        "gender": { "type": "string", "enum": ["male", "female"] },
+        "diseaseDuration": { "type": "number" }
+      },
+      "required": ["name", "age"]
+    },
+    "AssessmentRecord": {
+      "title": "Assessment Record",
+      "description": "UC risk assessment record",
+      "type": "object",
+      "properties": {
+        "patientId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "rawText": { "type": "string" },
+        "symptoms": { "type": "array" },
+        "labData": { "type": "object" },
+        "mayoScore": { "type": "number" },
+        "sccaiScore": { "type": "number" },
+        "riskScore": { "type": "number" },
+        "riskLevel": { "type": "string", "enum": ["low", "medium", "high"] },
+        "tcmAnalysis": { "type": "object" },
+        "shapFactors": { "type": "array" }
+      },
+      "required": ["patientId", "createdAt", "riskScore"]
+    },
+    "FollowUpPlan": {
+      "title": "Follow-up Plan",
+      "description": "Patient follow-up schedule and interventions",
+      "type": "object",
+      "properties": {
+        "patientId": { "type": "string" },
+        "recordId": { "type": "string" },
+        "nextVisitDate": { "type": "string", "format": "date" },
+        "interventions": { "type": "array" },
+        "monitoringIndicators": { "type": "array" },
+        "status": { "type": "string", "enum": ["active", "completed", "cancelled"] }
+      },
+      "required": ["patientId", "nextVisitDate"]
+    }
+  },
+  "firestore": {
+    "/patients/{patientId}": {
+      "schema": "Patient",
+      "description": "Collection of patients"
+    },
+    "/patients/{patientId}/assessments/{assessmentId}": {
+      "schema": "AssessmentRecord",
+      "description": "Risk assessment records for a patient"
+    },
+    "/patients/{patientId}/followups/{followupId}": {
+      "schema": "FollowUpPlan",
+      "description": "Follow-up plans for a patient"
+    }
+  }
+}
